@@ -5,10 +5,10 @@ LIBDIR=-L${POCO}/lib
 LIB=-lPocoNet -lPocoUtil -lPocoFoundation
 FLAG= ${INC} ${LIB} ${LIBDIR}
 
-timeServer: HTTPTimeServer.o 
+timeServer: main.o 
 	${CXX} ${FLAG} -o $@ $^
 
-HTTPTimeServer.o: HTTPTimeServer.cpp
+main.o: main.cpp
 	${CXX} ${FLAG} -c $<
 
 clean :
