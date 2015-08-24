@@ -1,7 +1,6 @@
 CXX=g++
-PWD= $(shell pwd)
-BASE_DIR= $(shell dirname $0)
-BASE_INC= ${PWD}/../include
+BASE_DIR= ..
+BASE_INC= ${BASE_DIR}/include
 
 POCO=${HOME}/local/poco
 INC= -I${POCO}/include -I${BASE_INC}
