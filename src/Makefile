@@ -15,11 +15,11 @@ OBJS=$(SRCS:.cpp=.o)
 $(TARGET):$(OBJS)
 	${CXX} ${FLAG} -o $@ $^
 
-%.o:%.c
+%.o:%.cpp
 	${CXX} ${FLAG} -o $@ -c $<
 
 clean :
-	rm -f *.o slim
+	rm -rf $(TARGET) $(OBJS)
 
 .PHONY: clean
 
