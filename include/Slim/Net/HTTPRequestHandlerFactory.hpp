@@ -6,7 +6,7 @@
 #include "Poco/Net/HTTPServerRequest.h"
 #include "Slim/Net/HTTPRequestHandler.hpp"
 #include <iostream>
-
+using Slim::Net::HTTPRequestHandler;
 namespace Slim {
     namespace Net {
         class HTTPRequestHandlerFactory: public Poco::Net::HTTPRequestHandlerFactory {
@@ -15,7 +15,7 @@ namespace Slim {
                 }
 
                 HTTPRequestHandler* createRequestHandler(const Poco::Net::HTTPServerRequest& request) {
-                    return new TimeRequestHandler(_format);
+                    return new HTTPRequestHandler(_format);
                 }
 
             private:

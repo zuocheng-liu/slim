@@ -15,8 +15,10 @@
 #include "Slim/Net/HTTPRequestHandlerFactory.hpp"
 #include <iostream>
 
+using Slim::Net::HTTPRequestHandlerFactory;
+
 namespace Slim {
-    namespace Net {
+    namespace Util {
         class ServerApplication: public Poco::Util::ServerApplication {
             public:
                 ServerApplication() {
@@ -28,15 +30,15 @@ namespace Slim {
             protected:
                 void initialize(Poco::Util::Application& self) {
                     loadConfiguration(); // load default configuration files, if present
-                    ServerApplication::initialize(self);
+                    Poco::Util::ServerApplication::initialize(self);
                 }
 
                 void uninitialize() {
-                    ServerApplication::uninitialize();
+                    Poco::Util::ServerApplication::uninitialize();
                 }
 
                 void defineOptions(Poco::Util::OptionSet& options) {
-                    ServerApplication::defineOptions(options);
+                    Poco::Util::ServerApplication::defineOptions(options);
 
                     options.addOption(
                             Poco::Util::Option("help", "h", "display help information on command line arguments")
@@ -45,7 +47,7 @@ namespace Slim {
                 }
 
                 void handleOption(const std::string& name, const std::string& value) {
-                    ServerApplication::handleOption(name, value);
+                    Poco::Util::ServerApplication::handleOption(name, value);
                 }
 
                 int main(const std::vector<std::string>& args) {
@@ -55,7 +57,6 @@ namespace Slim {
                     int maxQueued  = config().getInt("HTTPTimeServer.maxQueued", 100);
                     int maxThreads = config().getInt("HTTPTimeServer.maxThreads", 16);
                     Poco::ThreadPool::defaultPool().addCapacity(maxThreads);
-
                     Poco::Net::HTTPServerParams* pParams = new Poco::Net::HTTPServerParams;
                     pParams->setMaxQueued(maxQueued);
                     pParams->setMaxThreads(maxThreads);

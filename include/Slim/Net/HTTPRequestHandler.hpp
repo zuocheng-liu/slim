@@ -6,17 +6,18 @@
 #include "Poco/Net/HTTPServerResponse.h"
 #include "Poco/Timestamp.h"
 #include "Poco/DateTimeFormatter.h"
+#include "Poco/Util/ServerApplication.h"
 #include <iostream>
 
 namespace Slim {
     namespace Net {
         class HTTPRequestHandler: public Poco::Net::HTTPRequestHandler {
             public:
-                TimeRequestHandler(const std::string& format):  _format(format) {
+                HTTPRequestHandler(const std::string& format):  _format(format) {
                 }
                 
                 void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {
-                    Application& app = Application::instance();
+                    Poco::Util::Application& app = Poco::Util::Application::instance();
                     app.logger().information("Request from " + request.clientAddress().toString());
 
                     Poco::Timestamp now;

@@ -1,7 +1,7 @@
+#include "Slim/Util/ServerApplication.hpp"
 #include <iostream>
-#include "Slim::Util::ServerApplication.hpp"
-
+using  Slim::Util::ServerApplication;
 int main(int argc, char** argv) {
-    Slim::Util::ServerApplication app;
+    ServerApplication app;
     return app.run(argc, argv);
 }
