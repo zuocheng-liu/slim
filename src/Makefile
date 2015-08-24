@@ -8,11 +8,15 @@ LIBDIR=-L${POCO}/lib
 LIB=-lPocoNet -lPocoUtil -lPocoFoundation
 FLAG= ${INC} ${LIB} ${LIBDIR}
 
-slim: main.o 
+TARGET=slim
+SRCS=main.cpp
+OBJS=$(SRCS:.cpp=.o) 
+
+$(TARGET):$(OBJS)
 	${CXX} ${FLAG} -o $@ $^
 
-main.o: main.cpp
-	${CXX} ${FLAG} -c $<
+%.o:%.c
+	${CXX} ${FLAG} -o $@ -c $<
 
 clean :
 	rm -f *.o slim
