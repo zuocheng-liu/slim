@@ -5,18 +5,18 @@ BASE_INC= ${BASE_DIR}/include
 
 INC= -I${POCO}/include -I${BASE_INC}
 LIBDIR=-L${POCO}/lib
-LIB=-lPocoNet -lPocoUtil -lPocoFoundation
-FLAG= ${INC} ${LIB} ${LIBDIR}
+LIB=-lPocoUtil -lPocoNet -lPocoFoundation
+FLAG= ${LIBDIR} ${LIB} ${INC}
 
 TARGET=slim
 SRCS=main.cpp
 OBJS=$(SRCS:.cpp=.o) 
 
 $(TARGET):$(OBJS)
-	${CXX} ${FLAG} -o $@ $^
+	${CXX} -o $@ $^ ${FLAG}
 
 %.o:%.cpp
-	${CXX} ${FLAG} -o $@ -c $<
+	${CXX} -o $@ -c $< ${FLAG}
 
 clean :
 	rm -rf $(TARGET) $(OBJS)
