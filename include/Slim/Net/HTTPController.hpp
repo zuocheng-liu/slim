@@ -1,5 +1,5 @@
-#ifndef SLIM_NET_HTTPREQUESTHANDLER_HPP
-#define SLIM_NET_HTTPREQUESTHANDLER_HPP
+#ifndef SLIM_NET_HTTPCONTROLLER_HPP
+#define SLIM_NET_HTTPCONTROLLER_HPP
 
 #include "Poco/Net/HTTPRequestHandler.h"
 #include "Poco/Net/HTTPServerRequest.h"
@@ -12,9 +12,9 @@
 
 namespace Slim {
     namespace Net {
-        class HTTPRequestHandler: public Poco::Net::HTTPRequestHandler {
+        class HTTPController {
             public:
-                HTTPRequestHandler() {
+                HTTPController() {
                 }
                 
                 void handleRequest(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {

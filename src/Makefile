@@ -1,8 +1,8 @@
+POCO=${HOME}/local/poco
 CXX=g++
 BASE_DIR= ..
 BASE_INC= ${BASE_DIR}/include
 
-POCO=${HOME}/local/poco
 INC= -I${POCO}/include -I${BASE_INC}
 LIBDIR=-L${POCO}/lib
 LIB=-lPocoNet -lPocoUtil -lPocoFoundation

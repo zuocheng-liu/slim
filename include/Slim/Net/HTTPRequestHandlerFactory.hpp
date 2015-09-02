@@ -1,5 +1,5 @@
-#ifndef SLIM_NET_HTTP_REQUEST_HANDLER_FACTORY
-#define SLIM_NET_HTTP_REQUEST_HANDLER_FACTORY
+#ifndef SLIM_NET_HTTPREQUESTHANDLER_FACTORY
+#define SLIM_NET_HTTPREQUESTHANDLER_FACTORY
 
 #include "Poco/Net/HTTPServer.h"
 #include "Poco/Net/HTTPRequestHandlerFactory.h"
@@ -11,15 +11,12 @@ namespace Slim {
     namespace Net {
         class HTTPRequestHandlerFactory: public Poco::Net::HTTPRequestHandlerFactory {
             public:
-                HTTPRequestHandlerFactory(const std::string& format):_format(format) {
+                HTTPRequestHandlerFactory() {
                 }
 
                 HTTPRequestHandler* createRequestHandler(const Poco::Net::HTTPServerRequest& request) {
-                    return new HTTPRequestHandler(_format);
+                    return new HTTPRequestHandler();
                 }
-
-            private:
-                std::string _format;
         };
     }
 }

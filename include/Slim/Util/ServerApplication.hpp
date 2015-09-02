@@ -6,7 +6,6 @@
 #include "Poco/Net/HTTPServerRequest.h"
 #include "Poco/Net/HTTPServerResponse.h"
 #include "Poco/Net/ServerSocket.h"
-#include "Poco/DateTimeFormat.h"
 #include "Poco/Exception.h"
 #include "Poco/ThreadPool.h"
 #include "Poco/Util/ServerApplication.h"
@@ -53,7 +52,7 @@ namespace Slim {
                 int main(const std::vector<std::string>& args) {
                     // get parameters from configuration file
                     unsigned short port = (unsigned short) config().getInt("HTTPTimeServer.port", 9980);
-                    std::string format(config().getString("HTTPTimeServer.format", Poco::DateTimeFormat::SORTABLE_FORMAT));
+                    //std::string format(config().getString("HTTPTimeServer.format", Poco::DateTimeFormat::SORTABLE_FORMAT));
                     int maxQueued  = config().getInt("HTTPTimeServer.maxQueued", 100);
                     int maxThreads = config().getInt("HTTPTimeServer.maxThreads", 16);
                     Poco::ThreadPool::defaultPool().addCapacity(maxThreads);
@@ -64,7 +63,7 @@ namespace Slim {
                     // set-up a server socket
                     Poco::Net::ServerSocket svs(port);
                     // set-up a HTTPServer instance
-                    Poco::Net::HTTPServer srv(new HTTPRequestHandlerFactory(format), svs, pParams);
+                    Poco::Net::HTTPServer srv(new HTTPRequestHandlerFactory(), svs, pParams);
                     // start the HTTPServer
                     srv.start();
                     // wait for CTRL-C or kill
