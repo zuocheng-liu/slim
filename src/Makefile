@@ -15,6 +15,9 @@ OBJS=$(SRCS:.cpp=.o)
 $(TARGET):$(OBJS)
 	${CXX} -o $@ $^ ${FLAG}
 
+fastcgi : fastcgi.o
+	${CXX} -o $@ $^ ${FLAG}
+
 %.o:%.cpp
 	${CXX} -o $@ -c $< ${FLAG}
 

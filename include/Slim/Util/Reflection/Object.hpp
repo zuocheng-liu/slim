@@ -1,7 +1,7 @@
 #ifndef SLIM_UTIL_REFLECTION_OBJECT_HPP
 #define SLIM_UTIL_REFLECTION_OBJECT_HPP
 #include <string>
-#include "Slim/Util/Reflection/ClassFactory.hpp"
+#include <Slim/Util/Reflection/ClassFactory.hpp>
 namespace Slim {
     namespace Util {
         namespace Reflection {

@@ -4,8 +4,8 @@
 #include <string>
 #include <cstring>
 #include <cstdlib>
-#include "Slim/Util/Reflection/Object.hpp"
-#include "Slim/Exception.hpp"
+#include <Slim/Util/Reflection/Object.hpp>
+#include <Slim/Exception.hpp>
 namespace Slim {
     namespace Util {
         namespace Reflection {
