@@ -22,7 +22,7 @@ namespace Slim {
                     virtual void setClassName (const std::string name){
                         className = name;
                     }
-                    void registerClass(Object*& p) {
+                    void registerClass(Object* p) {
                         ClassFactory::registerClass(p);
                     }
                     std::string className;

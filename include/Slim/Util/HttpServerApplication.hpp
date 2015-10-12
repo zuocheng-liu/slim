@@ -1,5 +1,5 @@
-#ifndef SLIM_UTIL_SERVER_APPLICATION_HPP
-#define SLIM_UTIL_SERVER_APPLICATION_HPP
+#ifndef SLIM_UTIL_HTTPSERVER_APPLICATION_HPP
+#define SLIM_UTIL_HTTPSERVER_APPLICATION_HPP
 
 #include <Poco/Net/HTTPServer.h>
 #include <Poco/Net/HTTPServerParams.h>
@@ -18,12 +18,12 @@ using Slim::Net::HTTPRequestHandlerFactory;
 
 namespace Slim {
     namespace Util {
-        class ServerApplication: public Poco::Util::ServerApplication {
+        class HttpServerApplication: public Poco::Util::ServerApplication {
             public:
-                ServerApplication() {
+                HttpServerApplication() {
                 }
 
-                ~ServerApplication() {
+                ~HttpServerApplication() {
                 }
 
             protected:

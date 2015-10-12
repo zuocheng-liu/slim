@@ -1,8 +1,7 @@
-#include "Slim/Util/ServerApplication.hpp"
+#include <Slim/Util/CGITCPServerApplication.hpp>
 #include <iostream>
-using  Slim::Util::ServerApplication;
+using  Slim::Util::CGITCPServerApplication;
 int main(int argc, char** argv) {
-    ServerApplication app;
+    CGITCPServerApplication app;
     return app.run(argc, argv);
-
 }

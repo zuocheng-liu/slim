@@ -10,6 +10,7 @@ FLAG= ${LIBDIR} ${LIB} ${INC}
 
 TARGET=slim
 SRCS=main.cpp
+
 OBJS=$(SRCS:.cpp=.o) 
 
 $(TARGET):$(OBJS)

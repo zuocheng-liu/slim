@@ -25,10 +25,28 @@ namespace Slim {
                 inline std::string getRequest(string key) {
                     return request[key];
                 }
+                
+                inline std::string getCookie() {
+                    return cookie;
+                }
+
+                inline std::string getCookie(string key) {
+                    return cookie[key];
+                }
+                
+                inline std::string getSession() {
+                    return session;
+                }
+
+                inline std::string getSession(string key) {
+                    return session[key];
+                }
 
             private :
                 std::map<string, string> query;
                 std::map<string, string> request;  
+                std::map<string, string> cookie;  
+                std::map<string, string> session;  
         };
     }
 }
