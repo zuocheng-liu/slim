@@ -1,11 +1,16 @@
 #ifndef SLIM_NET_FCGI_MESSAGE_H
 #define SLIM_NET_FCGI_MESSAGE_H
 
-#include <string>
-#include <hash_map>
 
 #include "Definition.hpp"
 #include "Exception.hpp"
+#include <string>
+#include <hash_map>
+#include <cstring>
+using std::hash_map;
+using std::pair;
+using std::string;
+
 namespace Slim {
     namespace Net {
         namespace FCGI {
@@ -43,6 +48,11 @@ namespace Slim {
             } CGIEndRequestBody;
 
             typedef struct {
+                CGIHeader header;
+                CGIEndRequestBody body;
+            } CGIEndRequestRecord;
+
+            typedef struct {
                 BYTE type;
                 BYTE reserved[7];
             } CGIUnknownTypeBody;
@@ -61,6 +71,11 @@ namespace Slim {
              */
             class Message {
                 public :
+                    Message () :
+                        version(FCGI_VERSION_1),
+                        appStatus(0),
+                        protocolStatus(FCGI_CANT_MPX_CONN) {
+                    }
                     /*
                      * Interpret the FCGI Message Header. Processes FCGI
                      * BeginRequest and Management messages. Param hdr is the header.
@@ -69,102 +84,42 @@ namespace Slim {
                      */
                     public int processHeader(BYTE* hdr) {
                         processHeaderBytes(hdr);
-                        if (version != FCGI_VERSION_1) {
-                            throw Exception(UnsupportedVersion);
-                        }
-                        //in.contentLen = h_contentLength;
-                        //in.paddingLen = h_paddingLength;
-                        if (FCGI_BEGIN_REQUEST == type) {
-                            return processBeginRecord();
-                        }
-                        if (FCGI_NULL_REQUEST_ID == requestID) {
-                            return processManagementRecord();
-                        }
+
                         /*
                            if (requestID != in.request.requestID) {
                            return(FCGIGlobalDefs.def_FCGISkip);
                            }
-                        if (type != in.type) {
-                            throw Exception(ProtocolError);
+                           if (type != in.type) {
+                           throw Exception(ProtocolError);
                         }
                            */
                         return(FCGIGlobalDefs.def_FCGIStreamRecord);
                     }
 
                     /*
-                     * Reads FCGI Begin Request Record.
+                     * parse FCGI Begin Request Record.
                      */
-                    public int processBeginRecord() {
-                        byte beginReqBody[];
-                        byte endReqMsg[];
-                        if (requestID == 0 || in.contentLen
-                                != FCGIGlobalDefs.def_FCGIEndReqBodyLen) {
-                            return FCGIGlobalDefs.def_FCGIProtocolError;
+                    void processBeginRecord(CGIBeginRequestBody& body) {
+                        if (requestID == 0 ||
+                                contentLen != FCGI_BEGIN_REQ_BODY_LEN) {
+                            throw Exception(FCGI_PROTOCOL_ERROR);
                         }
-                        /*
-                         * If the webserver is multiplexing the connection,
-                         * this library can't deal with it, so repond with
-                         * FCGIEndReq message with protocolStatus FCGICantMpxConn
-                         */
-                        if (isBeginProcessed) {
-                            endReqMsg = new byte[FCGIGlobalDefs.def_FCGIHeaderLen
-                                + FCGIGlobalDefs.def_FCGIEndReqBodyLen];
-                            System.arraycopy(makeHeader(
-                                        FCGIGlobalDefs.def_FCGIEndRequest,
-                                        requestID,
-                                        FCGIGlobalDefs.def_FCGIEndReqBodyLen,
-                                        0), 0,  endReqMsg, 0,
-                                    FCGIGlobalDefs.def_FCGIHeaderLen);
-                            System.arraycopy(makeEndrequestBody(0,
-                                        FCGIGlobalDefs.def_FCGICantMpxConn), 0,
-                                    endReqMsg,
-                                    FCGIGlobalDefs.def_FCGIHeaderLen,
-                                    FCGIGlobalDefs.def_FCGIEndReqBodyLen);
-                            /*
-                             * since isBeginProcessed is first set below,this
-                             * can't be out first call, so request.out is properly set
-                             */
-                            try {
-                                in.request.outStream.write(endReqMsg, 0,
-                                        FCGIGlobalDefs.def_FCGIHeaderLen
-                                        + FCGIGlobalDefs.def_FCGIEndReqBodyLen);
-                            } catch (IOException e){
-                                in.request.outStream.setException(e);
-                                return -1;
-                            }
-                        }
-                        /*
-                         * Accept this  new request. Read the record body
-                         */
-                        in.request.requestID = requestID;
-                        beginReqBody =
-                            new byte[FCGIGlobalDefs.def_FCGIBeginReqBodyLen];
-                        if (in.read(beginReqBody, 0,
-                                    FCGIGlobalDefs.def_FCGIBeginReqBodyLen) !=
-                                FCGIGlobalDefs.def_FCGIBeginReqBodyLen) {
-                            return FCGIGlobalDefs.def_FCGIProtocolError;
-                        }
-                        br_flags = beginReqBody[2] & 0xFF;
-                        in.request.keepConnection
-                            = (br_flags & FCGIGlobalDefs.def_FCGIKeepConn) != 0;
-                        br_role = ((beginReqBody[0] & 0xFF) << 8) | (beginReqBody[1] & 0xFF);
-                        in.request.role = br_role;
-                        in.request.isBeginProcessed = true;
-                        return FCGIGlobalDefs.def_FCGIBeginRecord;
-                    }
-                    
-                    void readParams() {
+
+                        flags = body->flags & 0xFF;
+                        keepConnection = (flags & FCGI_KEEP_CONN) != 0;
+                        role = (body->roleB1 & 0xFF) << 8;
+                        role |= body->roleB0 & 0xFF;
                     }
 
-                    void clear() {
-                        isBeginProcessed = false;
-                    }
-                private :
                     void processHeaderBytes(const BYTE* const hdrBuf){
-                        CGIHeader* cgiHeader;
-                        cgiHeader = (CGIHeader*)hdrBuff;
+                        CGIHeader* cgiHeader = (CGIHeader*)hdrBuff;
                         type = cgiHeader->type;
                         version = cgiHeader->version;
+
+                        if (version != FCGI_VERSION_1) {
+                            throw Exception(UnsupportedVersion);
+                        }
+
                         requestID = cgiHeader->requestIdB1;
                         requestID << 8;
                         requestID |= cgiHeader->requestIdB0;
@@ -172,6 +127,72 @@ namespace Slim {
                         contentLength << 8;
                         contentLength |= cgiHeader->contentLengthB0;
                         paddingLength = cgiHeader->paddingLength;
+                    }
+
+
+                    /*
+                     * Build an FCGI Message Header
+                     */
+                    void makeHeader(CGIHeader &header) {
+                        header.version = FCGI_VERSION_1;
+                        header.type = (BYTE)type;
+                        header.requestIdB1 = (BYTE)((requestID >> 8) & 0xff);
+                        header.requestIdB0 = (BYTE)(requestID & 0xff);
+                        header.contentLengthB1 = (BYTE)((contentLength >> 8) & 0xff);
+                        header.contentLengthB0 = (BYTE)(contentLength & 0xff);
+                        header.paddingLength = (BYTE)paddingLength;
+                        header.reserved =  0;  //reserved byte
+                    }
+
+                    /*
+                     * Build an FCGI Message UnknownTypeBodyBody
+                     */
+                    void makeEndRequestBody(CGIEndRequestBody& body) {
+                        body.appStatusB3 = (BYTE)((appStatus >> 24) & 0xff);
+                        body.appStatusB2 = (BYTE)((appStatus >> 16) & 0xff);
+                        body.appStatusB1 = (BYTE)((appStatus >>  8) & 0xff);
+                        body.appStatusB0 = (BYTE)((appStatus      ) & 0xff);
+                        body.protocolStatus = (BYTE)((protocolStatus) & 0xff);
+                    }
+
+                    /*
+                     * Build a name-value body
+                     */
+                    void makeNameValue(
+                            string& name,
+                            string& value,
+                            BYTE* dest,
+                            int& pos) {
+                        int nameLen = name.length();
+                        if (nameLen < 0x80) {
+                            dest[pos++] = (BYTE)nameLen;
+                        }else {
+                            dest[pos++] = (BYTE)(((nameLen >> 24) | 0x80) & 0xff);
+                            dest[pos++] = (BYTE)((nameLen >> 16) & 0xff);
+                            dest[pos++] = (BYTE)((nameLen >> 8) & 0xff);
+                            dest[pos++] = (BYTE)nameLen;
+                        }
+                        int valLen = value.length();
+                        if (valLen < 0x80) {
+                            dest[pos++] =  (BYTE)valLen;
+                        }else {
+                            dest[pos++] = (BYTE)(((valLen >> 24) | 0x80) & 0xff);
+                            dest[pos++] = (BYTE)((valLen >> 16) & 0xff);
+                            dest[pos++] = (BYTE)((valLen >> 8) & 0xff);
+                            dest[pos++] = (BYTE)valLen;
+                        }
+
+                        name.copy(dest + pos, nameLen);
+                        pos += nameLen;
+                        value.copy(dest + pos, valLen);
+                        pos += valLen;
+                    }
+
+                    /*
+                     * Build an FCGI Message UnknownTypeBody
+                     */
+                    void makeUnknownTypeBody(CGIUnknownTypeBody& body, int unknownType){
+                        body.type = (BYTE)unknownType;
                     }
 
                     /*
@@ -182,19 +203,22 @@ namespace Slim {
                     int requestID; // 2 bytes
                     int contentLength; // 2 bytes
                     int paddingLength;
-                    bool isBeginProcessed;
 
                     /*
-                     * FCGI BeginRequest body.
+                     * FCGI begin request body.
                      */
                     int  role; // 2 bytes
                     int  flags;
 
                     /*
+                     * FCGI end request body.
+                     */
+                    int appStatus;
+                    int protocolStatus;
+                    /*
                      * Web server connection
                      */
                     bool  keepConnection;
-                    std::hash_map<std::string, std::string> params;
             };
         }
     }

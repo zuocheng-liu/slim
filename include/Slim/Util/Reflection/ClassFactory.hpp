@@ -27,7 +27,7 @@ namespace Slim {
                         return prototype;
                     }
                     static void registerClass(const Object* p) {
-                       reflectionMap.insert(pair<std::string, Object*>(p->getClassName(), p));
+                       reflectionMap.insert(std::pair<std::string, Object*>(p->getClassName(), p));
                     }
                 protected :
                     static std::hash_map<std::string, Object*> reflectionMap; 

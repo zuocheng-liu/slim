@@ -2,6 +2,9 @@
 #define SLIM_NET_FCGI_DEFINITION_H 
 
 #include <cstring>
+#define FCGI_MAX_CONNS  "FCGI_MAX_CONNS"
+#define FCGI_MAX_REQS   "FCGI_MAX_REQS"
+#define FCGI_MPXS_CONNS "FCGI_MPXS_CONNS"
 namespace Slim {
     namespace Net {
         namespace FCGI {
@@ -14,10 +17,12 @@ namespace Slim {
                 FCGI_BEGIN_REQ_BODY_LEN = 8,
                 FCGI_UNKOWN_BODY_TYPE_BODY_LEN = 8,
                 FCGI_MAX_LEN = 0xffff
-            }
+            };
+            
             enum Version {
                 FCGI_VERSION_1 = 1
-            }
+            };
+
             /**
              * Values for type component of FCGI_Header
              */
@@ -54,7 +59,7 @@ namespace Slim {
              */
             enum BeginRequestBodyFlag {
                 FCGI_KEEP_CONN = 1
-            }
+            };
 
             /*
              * Values for protocolStatus component of FCGI_EndRequestBody
@@ -64,17 +69,8 @@ namespace Slim {
                 FCGI_CANT_MPX_CONN = 1,
                 FCGI_OVERLOADED = 2,
                 FCGI_UNKNOWN_ROLE = 3
-            }
+            };
             
-            /*
-             * Error Codes 
-             */
-            enum ErrorCode {
-                UnsupportedVersion = -2,
-                ProtocolError = -3,
-                ParamsError = -4,
-                CallSeqError = -5
-            }
         }
     }
 }
