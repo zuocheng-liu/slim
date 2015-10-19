@@ -7,180 +7,130 @@ using Poco::Net::StreamSocket;
 using std::hash_map;
 using std::pair;
 using std::string;
+
 namespace Slim {
-    namespace Net {
-        namespace FCGI {
+namespace Net {
+namespace FCGI {
 
-            class Request {
-                public :
-                    Request(StreamSocket& socket) : _socket(socket) {
-                    }
+    typedef struct {
+        BYTE data[BUFFER_SIZE];
+        int length;
+        int pos;
+    } Buffer;
 
-                    void recv() {
-                        CGIHeader header;
-                        CGIBeginRequestBody begReqBody;
-                        _receiveMessage(header);
-                        _message.processHeaderBytes(&header);
-                        switch (_message.type) {
-                            case FCGI_BEGIN_REQUEST :
+    class Request {
+        public :
+            Request(StreamSocket& socket) : 
+                _socket(socket) {
+                    _buffer = new Buffer;
+                    _buffer->length = 0;
+                    _buffer->pos = 0;
+                }
+            ~Request() {
+                delete _buffer;
+            }
+            void recv() {
+                try {
+                    CGIHeader* header;
+                    CGIBeginRequestBody* begReqBody;
+                    _receiveMessage(header);
+                    _message.processHeaderBytes(header);
+                    switch (_message.type) {
+                        case FCGI_BEGIN_REQUEST :
+                            if (_isBeginProcessed) {
                                 _receiveMessage(begReqBody);
-                                _message.processBeginRecord(&begReqBody);
+                                _message.processBeginRecord(begReqBody);
                                 /*
                                  * get environment parameters
                                  */
                                 _setRoleParam();
-                                _readParams();
+                                _receiveAll();
+                                _message.processParams(
+                                        _buffer->data + _buffer->pos,
+                                        _buffer->length - _buffer->pos);
                                 break;
-
+                            } else {
+                            }
                             /*
                              * The only type of management message this library 
                              * understands is FCGIGetValues.
                              */
-                            case FCGI_GET_VALUES :
-                                _message.processManagementRecord();
-                                _readParams();
-                                break;
-                            default :
-                                break;
-                        }
+                        case FCGI_GET_VALUES :
+                            _message.processManagementRecord();
+                            _receiveAll();
+                            _readParams();
+                            break;
+                        case FCGI_ABORT_REQUEST :
+                            break;
+                        default :
+                            break;
+                    }
+                    //_readPadding();
 
-                        /*
-                         * at last , read the rest 
-                         */
-                        _readPadding();
-                    }
+                } catch (exception) {
+                    delete _buffer;
+                }
+            }
 
-                    const hash_map<string, string>& getParams() {
-                        return _params;
-                    }
-                    
-                    const int getType() {
-                        return _message.type;
-                    }
+            const hash_map<string, string>& getParams() {
+                return _message.params;
+            }
 
-                private :
-                    void clear() {
-                        _params.clear();
-                    }
+            const int getType() {
+                return _message.type;
+            }
 
                 private :
-                    void _receiveMessage(BYTE* buffer, int length) {
-                        for (;;) {
-                            int count = _socket.receiveBytes(buffer, length);
-                            length -= count;
-                            if (length == 0) {
-                                break;
-                            }
-                            if (count == 0 && length != 0) {
-                                throw Exception();
-                            }
-                        }
-                    }
+                void clear() {
+                    _buffer->length = 0;
+                    _buffer->pos = 0;
+                }
 
-                    template <typename M>
-                    void _receiveMessage(M) {
-                        BYTE* buffer = (BYTE*)(&M);
-                        int length = (int) sizeof (M);
-                        _receiveMessage(buffer, length);
-                    }
-
-                    void _setRoleParam() {
-                        switch(_message.role) {
-                            case FCGI_RESPONDER:
-                                _params.insert(pair<"ROLE","RESPONDER">);
-                                break;
-                            case FCGI_AUTHORIZER:
-                                _params.insert(pair<"ROLE", "AUTHORIZER">);
-                                break;
-                            case FCGI_FILTER:
-                                _params.insert(pair<"ROLE", "FILTER">);
-                                break;
-                            default :
-                                throw Exception(FCGI_ROLE_ERROR);
-                        }
-                    }
+                private :
+                /*
+                 * read fcgi message from buffer
+                 */
+                void _receiveMessage(BYTE*& msg, int msgLen) {
                     /*
-                     * Read FCGI name-value pairs from a stream until EOF. Put them
-                     * into a map object, storing both as strings.
+                     * if bytes are not enough, receive bytes
                      */
-                    int _readParams() {
-                        int nameLen,valueLen;
-                        BYTE lenBuff[3];
-                        BYTE* name = NULL;
-                        BYTE* value = NULL;
-                        for (;;) {
-                            try {
-                                /*
-                                 * receive name length
-                                 */
-                                _receiveMessage(lenBuff[0]);
-                                nameLen = lenBuff[0];
-                                if ((lenBuff[0] & 0x80) != 0) {
-                                    _receiveMessage(lenBuff, sizeof (lenBuff));
-                                    nameLen = ((nameLen & 0x7F) << 24)
-                                        | ((lenBuff[0] & 0xFF) << 16)
-                                        | ((lenBuff[1] & 0xFF) << 8)
-                                        | (lenBuff[2] & 0xFF);
-                                }
-
-                                /*
-                                 * receive value length
-                                 */
-                                _receiveMessage(lenBuff[0]);
-                                valueLen = lenBuff[0];
-                                if ((valueLen & 0x80) != 0) {
-                                    _receiveMessage(lenBuff, sizeof (lenBuff));
-                                    valueLen = ((valueLen & 0x7f) << 24)
-                                        | ((lenBuff[0] & 0xFF) << 16)
-                                        | ((lenBuff[1] & 0xFF) << 8)
-                                        | (lenBuff[2] & 0xFF);
-                                }
-
-                                /*
-                                 * nameLen and valueLen are now valid; read the name
-                                 * and the value from the stream and construct a standard
-                                 * environmental entity
-                                 */
-                                name  = new BYTE[nameLen];
-                                value = new BYTE[valueLen];
-                                    _receiveMessage(name, nameLen);
-                                    _receiveMessage(value, valueLen);
-                                _message.params.insert(
-                                        pair<string(name, nameLen), string(value, valueLen)>);
-                                delete name;
-                                name = NULL;
-                                delete value;
-                                value = NULL;
-                            } catch (Exception& e) {
-                                /*
-                                 * release resource
-                                 */
-                                delete name;
-                                delete value;
-                                break;
-                            }
-                        } // end for
-                    }
-                    
-                    void _readPadding() {
-                        BYTE buffer = new BYTE[8];
-                        int length = _message.paddingLength;
-                        /*
-                         * in case that paddingLength is bigger than 8.
-                         */
-                        try {
-                            for (;;) {
-                                _receiveMessage(buffer, _message.paddingLength);
-                            }
-                        } catch (Exception& e) {
+                    while (_buffer->length - _buffer->pos < msgLen) {
+                        int count = _socket.receiveBytes(
+                                _buffer->data + pos,
+                                BUFFER_SIZE - _buffer->length);
+                        if (count == 0) {
                             throw Exception(FCGI_PROTOCOL_ERROR);
                         }
+                        _buffer->length += count;
+                    };
+
+                    msg = _buffer->data + _buffer->pos;
+                    _buffer->pos += msgLen;
+                }
+
+                template <typename M>
+                    void _receiveMessage(M*& msg) {
+                        _receiveMessage(msg, sizeof(M));
                     }
-                    Message _message;
-                    StreamSocket& _socket;
-                    hash_map<string, string> _params;
+
+                void _receiveAll() {
+                    int count;
+                    do {
+                        count = _socket.receiveBytes(
+                                _buffer->data + pos,
+                                BUFFER_SIZE - _buffer->length);
+                    } while (count > 0);
+                }              
+                void _readPadding() {
+                    BYTE* padding;
+                    _receiveMessage(padding, _message.paddingLength);
+                }
+
+                StreamSocket& _socket;
+                Buffer* _buffer;
+                Message _message;
             };
-        }
     }
+}
 }
 #endif

@@ -7,7 +7,7 @@
 #include <Poco/Exception.h>
 #include <Poco/ThreadPool.h>
 #include <Poco/Util/ServerApplication.h>
-#include <Slim/Net/CGI/TCPServerConnectionFactory.hpp>
+#include <Slim/Net/FCGI/TCPServerConnectionFactory.hpp>
 #include <iostream>
 
 namespace Slim {
@@ -44,7 +44,7 @@ namespace Slim {
                     // set-up a server socket
                     Poco::Net::ServerSocket socket(port);
                     // Pass the ServerSocket to a TCPServer 
-                    Poco::Net::TCPServer server(new Slim::Net::CGI::TCPServerConnectionFactory(), socket); 
+                    Poco::Net::TCPServer server(new Slim::Net::FCGI::TCPServerConnectionFactory(), socket); 
                     server.start();
                     // wait for CTRL-C or kill
                     waitForTerminationRequest();
