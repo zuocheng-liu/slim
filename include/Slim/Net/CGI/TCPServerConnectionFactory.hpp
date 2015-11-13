@@ -4,10 +4,12 @@
 #include <Poco/Net/TCPServerConnectionFactory.h> 
 #include <Poco/Net/TCPServerConnection.h>
 #include <Poco/Net/StreamSocket.h>
-#include "TCPServerConnection.hpp"
+#include "Slim/Net/CGI/TCPServerConnection.hpp"
+using namespace Slim::Net::CGI;
+
 namespace Slim {
     namespace Net {
-        namespace FCGI {
+        namespace CGI {
             class TCPServerConnectionFactory: public Poco::Net::TCPServerConnectionFactory { 
                 
                 public:

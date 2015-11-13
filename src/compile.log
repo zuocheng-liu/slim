@@ -1,0 +1,439 @@
+In file included from /usr/include/c++/4.8/backward/hash_map:60:0,
+                 from ../include/Slim/Net/FCGI/Request.hpp:6,
+                 from ../include/Slim/Net/FCGI/Interface.hpp:4,
+                 from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+/usr/include/c++/4.8/backward/backward_warning.h:32:2: warning: #warning This file includes at least one deprecated or antiquated header which may be removed without further notice at a future date. Please use a non-deprecated interface with equivalent functionality instead. For a listing of replacement headers and interfaces, consult the file backward_warning.h. To disable this warning use -Wno-deprecated. [-Wcpp]
+ #warning \
+  ^
+In file included from ../include/Slim/Net/FCGI/Interface.hpp:4:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Request.hpp:7:17: error: ‘Slim’ has not been declared
+ using namespace Slim::Net::FCGI;
+                 ^
+../include/Slim/Net/FCGI/Request.hpp:7:28: error: ‘FCGI’ is not a namespace-name
+ using namespace Slim::Net::FCGI;
+                            ^
+../include/Slim/Net/FCGI/Request.hpp:7:32: error: expected namespace-name before ‘;’ token
+ using namespace Slim::Net::FCGI;
+                                ^
+../include/Slim/Net/FCGI/Request.hpp:16:9: error: ‘BYTE’ does not name a type
+         BYTE data[BUFFER_SIZE];
+         ^
+../include/Slim/Net/FCGI/Request.hpp:75:19: error: ‘hash_map’ does not name a type
+             const hash_map<string, string>& getParams() {
+                   ^
+../include/Slim/Net/FCGI/Request.hpp:92:34: error: ‘BYTE’ has not been declared
+             void _receiveMessage(BYTE*& msg, int msgLen) {
+                                  ^
+../include/Slim/Net/FCGI/Request.hpp:130:13: error: ‘Message’ does not name a type
+             Message _message;
+             ^
+../include/Slim/Net/FCGI/Request.hpp: In member function ‘void Slim::Net::FCGI::Request::recv()’:
+../include/Slim/Net/FCGI/Request.hpp:34:21: error: ‘CGIHeader’ was not declared in this scope
+                     CGIHeader* header;
+                     ^
+../include/Slim/Net/FCGI/Request.hpp:34:32: error: ‘header’ was not declared in this scope
+                     CGIHeader* header;
+                                ^
+../include/Slim/Net/FCGI/Request.hpp:35:21: error: ‘CGIBeginRequestBody’ was not declared in this scope
+                     CGIBeginRequestBody* begReqBody;
+                     ^
+../include/Slim/Net/FCGI/Request.hpp:35:42: error: ‘begReqBody’ was not declared in this scope
+                     CGIBeginRequestBody* begReqBody;
+                                          ^
+../include/Slim/Net/FCGI/Request.hpp:37:21: error: ‘_message’ was not declared in this scope
+                     _message.processHeaderBytes(header);
+                     ^
+../include/Slim/Net/FCGI/Request.hpp:39:30: error: ‘FCGI_BEGIN_REQUEST’ was not declared in this scope
+                         case FCGI_BEGIN_REQUEST :
+                              ^
+../include/Slim/Net/FCGI/Request.hpp:40:33: error: ‘_isBeginProcessed’ was not declared in this scope
+                             if (_isBeginProcessed) {
+                                 ^
+../include/Slim/Net/FCGI/Request.hpp:46:47: error: ‘_setRoleParam’ was not declared in this scope
+                                 _setRoleParam();
+                                               ^
+../include/Slim/Net/FCGI/Request.hpp:49:50: error: ‘struct Slim::Net::FCGI::Buffer’ has no member named ‘data’
+                                         _buffer->data + _buffer->pos,
+                                                  ^
+../include/Slim/Net/FCGI/Request.hpp:58:30: error: ‘FCGI_GET_VALUES’ was not declared in this scope
+                         case FCGI_GET_VALUES :
+                              ^
+../include/Slim/Net/FCGI/Request.hpp:61:41: error: ‘_readParams’ was not declared in this scope
+                             _readParams();
+                                         ^
+../include/Slim/Net/FCGI/Request.hpp:63:30: error: ‘FCGI_ABORT_REQUEST’ was not declared in this scope
+                         case FCGI_ABORT_REQUEST :
+                              ^
+../include/Slim/Net/FCGI/Request.hpp: In member function ‘const int Slim::Net::FCGI::Request::getType()’:
+../include/Slim/Net/FCGI/Request.hpp:80:24: error: ‘_message’ was not declared in this scope
+                 return _message.type;
+                        ^
+../include/Slim/Net/FCGI/Request.hpp: In member function ‘void Slim::Net::FCGI::Request::_receiveMessage(int*&, int)’:
+../include/Slim/Net/FCGI/Request.hpp:98:38: error: ‘struct Slim::Net::FCGI::Buffer’ has no member named ‘data’
+                             _buffer->data + pos,
+                                      ^
+../include/Slim/Net/FCGI/Request.hpp:98:45: error: ‘pos’ was not declared in this scope
+                             _buffer->data + pos,
+                                             ^
+../include/Slim/Net/FCGI/Request.hpp:99:29: error: ‘BUFFER_SIZE’ was not declared in this scope
+                             BUFFER_SIZE - _buffer->length);
+                             ^
+../include/Slim/Net/FCGI/Request.hpp:101:41: error: ‘FCGI_PROTOCOL_ERROR’ was not declared in this scope
+                         throw Exception(FCGI_PROTOCOL_ERROR);
+                                         ^
+../include/Slim/Net/FCGI/Request.hpp:101:60: error: ‘Exception’ was not declared in this scope
+                         throw Exception(FCGI_PROTOCOL_ERROR);
+                                                            ^
+../include/Slim/Net/FCGI/Request.hpp:101:60: note: suggested alternative:
+In file included from /home/i/local/poco/include/Poco/AutoPtr.h:24:0,
+                 from /home/i/local/poco/include/Poco/Net/IPAddress.h:26,
+                 from /home/i/local/poco/include/Poco/Net/SocketAddressImpl.h:25,
+                 from /home/i/local/poco/include/Poco/Net/SocketAddress.h:24,
+                 from /home/i/local/poco/include/Poco/Net/SocketImpl.h:25,
+                 from /home/i/local/poco/include/Poco/Net/Socket.h:24,
+                 from /home/i/local/poco/include/Poco/Net/ServerSocket.h:24,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:4,
+                 from main.cpp:1:
+/home/i/local/poco/include/Poco/Exception.h:30:22: note:   ‘Poco::Exception’
+ class Foundation_API Exception: public std::exception
+                      ^
+In file included from ../include/Slim/Net/FCGI/Interface.hpp:4:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Request.hpp:106:32: error: ‘struct Slim::Net::FCGI::Buffer’ has no member named ‘data’
+                 msg = _buffer->data + _buffer->pos;
+                                ^
+../include/Slim/Net/FCGI/Request.hpp: In member function ‘void Slim::Net::FCGI::Request::_receiveAll()’:
+../include/Slim/Net/FCGI/Request.hpp:119:38: error: ‘struct Slim::Net::FCGI::Buffer’ has no member named ‘data’
+                             _buffer->data + pos,
+                                      ^
+../include/Slim/Net/FCGI/Request.hpp:119:45: error: ‘pos’ was not declared in this scope
+                             _buffer->data + pos,
+                                             ^
+../include/Slim/Net/FCGI/Request.hpp:120:29: error: ‘BUFFER_SIZE’ was not declared in this scope
+                             BUFFER_SIZE - _buffer->length);
+                             ^
+../include/Slim/Net/FCGI/Request.hpp: In member function ‘void Slim::Net::FCGI::Request::_readPadding()’:
+../include/Slim/Net/FCGI/Request.hpp:124:17: error: ‘BYTE’ was not declared in this scope
+                 BYTE* padding;
+                 ^
+../include/Slim/Net/FCGI/Request.hpp:124:23: error: ‘padding’ was not declared in this scope
+                 BYTE* padding;
+                       ^
+../include/Slim/Net/FCGI/Request.hpp:125:42: error: ‘_message’ was not declared in this scope
+                 _receiveMessage(padding, _message.paddingLength);
+                                          ^
+In file included from ../include/Slim/Net/FCGI/Interface.hpp:5:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Response.hpp: At global scope:
+../include/Slim/Net/FCGI/Response.hpp:44:38: error: ‘hash_map’ does not name a type
+             void sendNameValue(const hash_map<string, string>& params) {
+                                      ^
+../include/Slim/Net/FCGI/Response.hpp:44:38: error: ISO C++ forbids declaration of ‘parameter’ with no type [-fpermissive]
+../include/Slim/Net/FCGI/Response.hpp:44:46: error: expected ‘,’ or ‘...’ before ‘<’ token
+             void sendNameValue(const hash_map<string, string>& params) {
+                                              ^
+../include/Slim/Net/FCGI/Response.hpp:117:13: error: ‘Message’ does not name a type
+             Message _message;
+             ^
+../include/Slim/Net/FCGI/Response.hpp:119:13: error: ‘hash_map’ does not name a type
+             hash_map<string, string> _nameValues;
+             ^
+../include/Slim/Net/FCGI/Response.hpp: In member function ‘void Slim::Net::FCGI::Response::sendEndRequst(int, int)’:
+../include/Slim/Net/FCGI/Response.hpp:20:17: error: ‘CGIEndRequestRecord’ was not declared in this scope
+                 CGIEndRequestRecord record;
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:20:37: error: expected ‘;’ before ‘record’
+                 CGIEndRequestRecord record;
+                                     ^
+../include/Slim/Net/FCGI/Response.hpp:24:17: error: ‘_message’ was not declared in this scope
+                 _message.requestID = requestID;
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:25:33: error: ‘FCGI_END_REQUEST’ was not declared in this scope
+                 _message.type = FCGI_END_REQUEST;
+                                 ^
+../include/Slim/Net/FCGI/Response.hpp:26:42: error: ‘FCGI_END_REQ_BODY_LEN’ was not declared in this scope
+                 _message.contentLength = FCGI_END_REQ_BODY_LEN;
+                                          ^
+../include/Slim/Net/FCGI/Response.hpp:29:37: error: ‘record’ was not declared in this scope
+                 _message.makeHeader(record.header);
+                                     ^
+../include/Slim/Net/FCGI/Response.hpp:33:26: error: expected type-specifier before ‘Exception’
+                 } catch (Exception &e) {
+                          ^
+../include/Slim/Net/FCGI/Response.hpp:33:36: error: expected ‘)’ before ‘&’ token
+                 } catch (Exception &e) {
+                                    ^
+../include/Slim/Net/FCGI/Response.hpp:33:36: error: expected ‘{’ before ‘&’ token
+../include/Slim/Net/FCGI/Response.hpp:33:37: error: ‘e’ was not declared in this scope
+                 } catch (Exception &e) {
+                                     ^
+../include/Slim/Net/FCGI/Response.hpp:33:38: error: expected ‘;’ before ‘)’ token
+                 } catch (Exception &e) {
+                                      ^
+../include/Slim/Net/FCGI/Response.hpp: In member function ‘void Slim::Net::FCGI::Response::sendNameValue(int)’:
+../include/Slim/Net/FCGI/Response.hpp:45:17: error: ‘BYTE’ was not declared in this scope
+                 BYTE buffer[48];
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:45:22: error: expected ‘;’ before ‘buffer’
+                 BYTE buffer[48];
+                      ^
+../include/Slim/Net/FCGI/Response.hpp:46:17: error: ‘CGIHeader’ was not declared in this scope
+                 CGIHeader* header = (CGIHeader*)buffer;
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:46:28: error: ‘header’ was not declared in this scope
+                 CGIHeader* header = (CGIHeader*)buffer;
+                            ^
+../include/Slim/Net/FCGI/Response.hpp:46:48: error: expected primary-expression before ‘)’ token
+                 CGIHeader* header = (CGIHeader*)buffer;
+                                                ^
+../include/Slim/Net/FCGI/Response.hpp:46:49: error: expected ‘;’ before ‘buffer’
+                 CGIHeader* header = (CGIHeader*)buffer;
+                                                 ^
+../include/Slim/Net/FCGI/Response.hpp:47:27: error: ‘FCGI_HEADER_LEN’ was not declared in this scope
+                 int pos = FCGI_HEADER_LEN;
+                           ^
+../include/Slim/Net/FCGI/Response.hpp:51:21: error: ‘params’ was not declared in this scope
+                 if (params.find(FCGI_MAX_CONNS) != params.end()) {
+                     ^
+../include/Slim/Net/FCGI/Response.hpp:51:33: error: ‘FCGI_MAX_CONNS’ was not declared in this scope
+                 if (params.find(FCGI_MAX_CONNS) != params.end()) {
+                                 ^
+../include/Slim/Net/FCGI/Response.hpp:52:21: error: ‘_message’ was not declared in this scope
+                     _message.makeNameValue(FCGI_MAX_CONNS, "1", buffer, pos);
+                     ^
+../include/Slim/Net/FCGI/Response.hpp:52:65: error: ‘buffer’ was not declared in this scope
+                     _message.makeNameValue(FCGI_MAX_CONNS, "1", buffer, pos);
+                                                                 ^
+../include/Slim/Net/FCGI/Response.hpp:53:40: error: ‘FCGI_MAX_REQS’ was not declared in this scope
+                 } else if (params.find(FCGI_MAX_REQS) != params.end()) {
+                                        ^
+../include/Slim/Net/FCGI/Response.hpp:54:21: error: ‘_message’ was not declared in this scope
+                     _message.makeNameValue(FCGI_MAX_REQS, "1", buffer, pos);
+                     ^
+../include/Slim/Net/FCGI/Response.hpp:54:64: error: ‘buffer’ was not declared in this scope
+                     _message.makeNameValue(FCGI_MAX_REQS, "1", buffer, pos);
+                                                                ^
+../include/Slim/Net/FCGI/Response.hpp:55:40: error: ‘FCGI_MPXS_CONNS’ was not declared in this scope
+                 } else if (params.find(FCGI_MPXS_CONNS) != params.end()) {
+                                        ^
+../include/Slim/Net/FCGI/Response.hpp:56:21: error: ‘_message’ was not declared in this scope
+                     _message.makeNameValue(FCGI_MPXS_CONNS, "0", buffer, pos);
+                     ^
+../include/Slim/Net/FCGI/Response.hpp:56:66: error: ‘buffer’ was not declared in this scope
+                     _message.makeNameValue(FCGI_MPXS_CONNS, "0", buffer, pos);
+                                                                  ^
+../include/Slim/Net/FCGI/Response.hpp:62:17: error: ‘_message’ was not declared in this scope
+                 _message.requestID = FCGI_NULL_REQUEST_ID;
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:62:38: error: ‘FCGI_NULL_REQUEST_ID’ was not declared in this scope
+                 _message.requestID = FCGI_NULL_REQUEST_ID;
+                                      ^
+../include/Slim/Net/FCGI/Response.hpp:63:33: error: ‘FCGI_GET_VALUE_RESULT’ was not declared in this scope
+                 _message.type = FCGI_GET_VALUE_RESULT;
+                                 ^
+../include/Slim/Net/FCGI/Response.hpp:69:34: error: ‘buffer’ was not declared in this scope
+                     _sendMessage(buffer, _message.contentLength + _message.paddingLength);
+                                  ^
+../include/Slim/Net/FCGI/Response.hpp:70:26: error: expected type-specifier before ‘Exception’
+                 } catch (Exception &e) {
+                          ^
+../include/Slim/Net/FCGI/Response.hpp:70:36: error: expected ‘)’ before ‘&’ token
+                 } catch (Exception &e) {
+                                    ^
+../include/Slim/Net/FCGI/Response.hpp:70:36: error: expected ‘{’ before ‘&’ token
+../include/Slim/Net/FCGI/Response.hpp:70:37: error: ‘e’ was not declared in this scope
+                 } catch (Exception &e) {
+                                     ^
+../include/Slim/Net/FCGI/Response.hpp:70:38: error: expected ‘;’ before ‘)’ token
+                 } catch (Exception &e) {
+                                      ^
+../include/Slim/Net/FCGI/Response.hpp: In member function ‘void Slim::Net::FCGI::Response::sendUnknownRecord(int)’:
+../include/Slim/Net/FCGI/Response.hpp:75:17: error: ‘CGIUnknownTypeRecord’ was not declared in this scope
+                 CGIUnknownTypeRecord record;
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:75:38: error: expected ‘;’ before ‘record’
+                 CGIUnknownTypeRecord record;
+                                      ^
+../include/Slim/Net/FCGI/Response.hpp:79:17: error: ‘_message’ was not declared in this scope
+                 _message.requestID = FCGI_NULL_REQUEST_ID;
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:79:38: error: ‘FCGI_NULL_REQUEST_ID’ was not declared in this scope
+                 _message.requestID = FCGI_NULL_REQUEST_ID;
+                                      ^
+../include/Slim/Net/FCGI/Response.hpp:80:33: error: ‘FCGI_UNKNOWN_TYPE’ was not declared in this scope
+                 _message.type = FCGI_UNKNOWN_TYPE;
+                                 ^
+../include/Slim/Net/FCGI/Response.hpp:81:42: error: ‘FCGI_UNKOWN_BODY_TYPE_BODY_LEN’ was not declared in this scope
+                 _message.contentLength = FCGI_UNKOWN_BODY_TYPE_BODY_LEN;
+                                          ^
+../include/Slim/Net/FCGI/Response.hpp:83:37: error: ‘record’ was not declared in this scope
+                 _message.makeHeader(record.header);
+                                     ^
+../include/Slim/Net/FCGI/Response.hpp:87:26: error: expected type-specifier before ‘Exception’
+                 } catch (Exception &e) {
+                          ^
+../include/Slim/Net/FCGI/Response.hpp:87:36: error: expected ‘)’ before ‘&’ token
+                 } catch (Exception &e) {
+                                    ^
+../include/Slim/Net/FCGI/Response.hpp:87:36: error: expected ‘{’ before ‘&’ token
+../include/Slim/Net/FCGI/Response.hpp:87:37: error: ‘e’ was not declared in this scope
+                 } catch (Exception &e) {
+                                     ^
+../include/Slim/Net/FCGI/Response.hpp:87:38: error: expected ‘;’ before ‘)’ token
+                 } catch (Exception &e) {
+                                      ^
+../include/Slim/Net/FCGI/Response.hpp: In member function ‘void Slim::Net::FCGI::Response::_sendMessage(M&, int)’:
+../include/Slim/Net/FCGI/Response.hpp:100:33: error: ‘_soceket’ was not declared in this scope
+                     int count = _soceket.sendBytes(buffer, length);
+                                 ^
+../include/Slim/Net/FCGI/Response.hpp: In member function ‘void Slim::Net::FCGI::Response::_sendEOF()’:
+../include/Slim/Net/FCGI/Response.hpp:112:17: error: ‘BYTE’ was not declared in this scope
+                 BYTE s[] = "Hello , cgi.";
+                 ^
+../include/Slim/Net/FCGI/Response.hpp:112:22: error: expected ‘;’ before ‘s’
+                 BYTE s[] = "Hello , cgi.";
+                      ^
+../include/Slim/Net/FCGI/Response.hpp:113:22: error: expected ‘;’ before ‘eof’
+                 BYTE eof = EOF;
+                      ^
+../include/Slim/Net/FCGI/Response.hpp:114:30: error: ‘s’ was not declared in this scope
+                 _sendMessage(s);
+                              ^
+../include/Slim/Net/FCGI/Response.hpp:115:30: error: ‘eof’ was not declared in this scope
+                 _sendMessage(eof);
+                              ^
+In file included from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Interface.hpp: At global scope:
+../include/Slim/Net/FCGI/Interface.hpp:90:19: error: ‘hash_map’ does not name a type
+             const hash_map<string, string>& getParams() {
+                   ^
+../include/Slim/Net/FCGI/Interface.hpp:104:5: error: expected ‘;’ after class definition
+     }
+     ^
+../include/Slim/Net/FCGI/Interface.hpp: In member function ‘int Slim::Net::FCGI::Interface::accept()’:
+../include/Slim/Net/FCGI/Interface.hpp:53:52: error: no matching function for call to ‘Slim::Net::FCGI::Request::recv(bool&)’
+                     _request.recv(_isBeginProcessed);
+                                                    ^
+../include/Slim/Net/FCGI/Interface.hpp:53:52: note: candidate is:
+In file included from ../include/Slim/Net/FCGI/Interface.hpp:4:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Request.hpp:32:18: note: void Slim::Net::FCGI::Request::recv()
+             void recv() {
+                  ^
+../include/Slim/Net/FCGI/Request.hpp:32:18: note:   candidate expects 0 arguments, 1 provided
+In file included from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Interface.hpp:56:44: error: ‘FCGI_BEGIN_REQUEST’ was not declared in this scope
+                             requestType != FCGI_BEGIN_REQUEST){
+                                            ^
+../include/Slim/Net/FCGI/Interface.hpp:60:44: error: ‘FCGI_BEGIN_REQUEST’ was not declared in this scope
+                             requestType != FCGI_BEGIN_REQUEST){
+                                            ^
+../include/Slim/Net/FCGI/Interface.hpp:66:58: error: ‘class Slim::Net::FCGI::Request’ has no member named ‘requestID’
+                         _response.sendEndRequst(_request.requestID, 
+                                                          ^
+../include/Slim/Net/FCGI/Interface.hpp:67:33: error: ‘FCGI_CANT_MPX_CONN’ was not declared in this scope
+                                 FCGI_CANT_MPX_CONN);
+                                 ^
+../include/Slim/Net/FCGI/Interface.hpp:72:30: error: ‘FCGI_BEGIN_REQUEST’ was not declared in this scope
+                         case FCGI_BEGIN_REQUEST :
+                              ^
+../include/Slim/Net/FCGI/Interface.hpp:74:30: error: ‘FCGI_GET_VALUES’ was not declared in this scope
+                         case FCGI_GET_VALUES :
+                              ^
+../include/Slim/Net/FCGI/Interface.hpp:75:62: error: ‘class Slim::Net::FCGI::Request’ has no member named ‘getParams’
+                             _response.sendNameValue(_request.getParams());
+                                                              ^
+../include/Slim/Net/FCGI/Interface.hpp:77:30: error: ‘FCGI_ABORT_REQUEST’ was not declared in this scope
+                         case FCGI_ABORT_REQUEST :
+                              ^
+../include/Slim/Net/FCGI/Interface.hpp:78:62: error: ‘class Slim::Net::FCGI::Request’ has no member named ‘requestID’
+                             _response.sendEndRequst(_request.requestID, FCGI_REQUEST_COMPLETE);
+                                                              ^
+../include/Slim/Net/FCGI/Interface.hpp:78:73: error: ‘FCGI_REQUEST_COMPLETE’ was not declared in this scope
+                             _response.sendEndRequst(_request.requestID, FCGI_REQUEST_COMPLETE);
+                                                                         ^
+../include/Slim/Net/FCGI/Interface.hpp: In member function ‘void Slim::Net::FCGI::Interface::complete()’:
+../include/Slim/Net/FCGI/Interface.hpp:87:26: error: ‘_sendEOF’ was not declared in this scope
+                 _sendEOF();
+                          ^
+../include/Slim/Net/FCGI/Interface.hpp:88:50: error: ‘class Slim::Net::FCGI::Request’ has no member named ‘requestID’
+                 _response.sendEndRequst(_request.requestID, FCGI_REQUEST_COMPLETE);
+                                                  ^
+../include/Slim/Net/FCGI/Interface.hpp:88:61: error: ‘FCGI_REQUEST_COMPLETE’ was not declared in this scope
+                 _response.sendEndRequst(_request.requestID, FCGI_REQUEST_COMPLETE);
+                                                             ^
+In file included from ../include/Slim/Net/FCGI/Interface.hpp:4:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Request.hpp: In member function ‘void Slim::Net::FCGI::Interface::_clear()’:
+../include/Slim/Net/FCGI/Request.hpp:84:18: error: ‘void Slim::Net::FCGI::Request::clear()’ is private
+             void clear() {
+                  ^
+In file included from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Interface.hpp:96:32: error: within this context
+                 _request.clear();
+                                ^
+In file included from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7:0,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/TCPServerConnection.hpp: In member function ‘virtual void Slim::Net::FCGI::TCPServerConnection::run()’:
+../include/Slim/Net/FCGI/TCPServerConnection.hpp:27:31: error: no matching function for call to ‘Slim::Net::FCGI::Interface::Interface()’
+                     Interface cgi;
+                               ^
+../include/Slim/Net/FCGI/TCPServerConnection.hpp:27:31: note: candidates are:
+In file included from ../include/Slim/Net/FCGI/TCPServerConnection.hpp:6:0,
+                 from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/Interface.hpp:15:13: note: Slim::Net::FCGI::Interface::Interface(Poco::Net::StreamSocket&)
+             Interface(StreamSocket& socket) :
+             ^
+../include/Slim/Net/FCGI/Interface.hpp:15:13: note:   candidate expects 1 argument, 0 provided
+../include/Slim/Net/FCGI/Interface.hpp:13:11: note: Slim::Net::FCGI::Interface::Interface(const Slim::Net::FCGI::Interface&)
+     class Interface {
+           ^
+../include/Slim/Net/FCGI/Interface.hpp:13:11: note:   candidate expects 1 argument, 0 provided
+In file included from ../include/Slim/Net/FCGI/TCPServerConnectionFactory.hpp:7:0,
+                 from ../include/Slim/Util/CGITCPServerApplication.hpp:10,
+                 from main.cpp:1:
+../include/Slim/Net/FCGI/TCPServerConnection.hpp:31:26: error: expected type-specifier before ‘Exception’
+                 } catch (Exception& e) {
+                          ^
+../include/Slim/Net/FCGI/TCPServerConnection.hpp:31:35: error: expected ‘)’ before ‘&’ token
+                 } catch (Exception& e) {
+                                   ^
+../include/Slim/Net/FCGI/TCPServerConnection.hpp:31:35: error: expected ‘{’ before ‘&’ token
+../include/Slim/Net/FCGI/TCPServerConnection.hpp:31:37: error: ‘e’ was not declared in this scope
+                 } catch (Exception& e) {
+                                     ^
+../include/Slim/Net/FCGI/TCPServerConnection.hpp:31:38: error: expected ‘;’ before ‘)’ token
+                 } catch (Exception& e) {
+                                      ^
+make: *** [main.o] Error 1

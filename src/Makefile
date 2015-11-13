@@ -3,27 +3,29 @@ CXX=g++
 BASE_DIR= ..
 BASE_INC= ${BASE_DIR}/include
 
-INC= -I${POCO}/include -I${BASE_INC}
-LIBDIR=-L${POCO}/lib
-LIB=-lPocoUtil -lPocoNet -lPocoFoundation
+INC= -I${BASE_INC} \
+	 -I${POCO}/include
+LIBDIR= -L${POCO}/lib
+LIB= -lPocoUtil \
+	 -lPocoNet \
+	 -lPocoFoundation
 FLAG= ${LIBDIR} ${LIB} ${INC}
 
 TARGET=slim
-SRCS=main.cpp
+SRCS=main.cpp Exception.cpp Handler.cpp Message.cpp Request.cpp Response.cpp Stream.cpp
 
 OBJS=$(SRCS:.cpp=.o) 
 
 $(TARGET):$(OBJS)
-	${CXX} -o $@ $^ ${FLAG}
+	${CXX} -o $@ $^ ${FLAG} -g
 
 fastcgi : fastcgi.o
 	${CXX} -o $@ $^ ${FLAG}
 
 %.o:%.cpp
-	${CXX} -o $@ -c $< ${FLAG}
+	${CXX} -o $@ -c $< ${FLAG} -g
 
 clean :
 	rm -rf $(TARGET) $(OBJS)
 
 .PHONY: clean
-
