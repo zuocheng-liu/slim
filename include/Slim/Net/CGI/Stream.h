@@ -16,6 +16,7 @@ typedef std::basic_streambuf<BYTE> byte_streambuf;
 typedef std::basic_istream<BYTE> byte_istream;
 typedef std::basic_ostream<BYTE> byte_ostream;
 typedef byte_streambuf::int_type int_type;
+
 class InputStreamBuffer : public byte_streambuf {
     public :
         enum {
@@ -54,8 +55,10 @@ class InputStream : public byte_istream {
         InputStream(InputStreamBuffer* buf);
         ~InputStream();
         
-        InputStream& getline(ByteArray& s, std::streamsize n);
+        InputStream& getline(char_type* s, std::streamsize n, char_type delim);
         InputStream& getline(char_type* s, std::streamsize n);
+        InputStream& getline(ByteArray& s, std::streamsize n);
+        InputStream& getline(char* s, std::streamsize n);
         
         template <class C>
         InputStream& operator>> (C& val) {
@@ -72,6 +75,7 @@ class OutputStream : public byte_ostream {
         
         OutputStream& write(const ByteArray& s, std::streamsize n);
         OutputStream& write(const char_type* s, std::streamsize n);
+        OutputStream& write(const char* s, std::streamsize n);
         
         template <class C>
         OutputStream& operator<< (const C& val) {

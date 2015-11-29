@@ -7,7 +7,7 @@
 #include <Poco/Exception.h>
 #include <Poco/ThreadPool.h>
 #include <Poco/Util/ServerApplication.h>
-#include "Slim/Net/CGI/TCPServerConnectionFactory.hpp"
+#include "Slim/Net/CGI/TCPServerConnectionFactory.h"
 
 namespace Slim {
 namespace Util {
