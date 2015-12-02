@@ -1,5 +1,6 @@
 #include "Slim/Net/CGI/Stream.h"
-
+using std::cout;
+using std::endl;
 namespace Slim {
 namespace Net {
 namespace CGI {
@@ -16,6 +17,7 @@ int_type InputStreamBuffer::underflow() {
     if (len <= 0) {
         return traits_type::eof();
     }
+    cout<<"recieved bytes: \t"<<len<<endl;
     setg(_buffer, _buffer, _buffer + len);
     return *gptr();
 }

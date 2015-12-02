@@ -18,7 +18,6 @@ Handler::~Handler() {
 }
 
 void Handler::accept() {
-    for (;;) {
         _clear();
         _request.recv();
         handle();
@@ -43,7 +42,6 @@ void Handler::accept() {
                 throw Exception(-123);
         }
                  */
-    }
 }
 
 void Handler::complete() {

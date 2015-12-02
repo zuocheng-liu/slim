@@ -1,30 +1,13 @@
 #ifndef SLIM_NET_CGI_DEFINITION_H 
 #define SLIM_NET_CGI_DEFINITION_H 
 
+#include <string>
+#include <iostream>
+
 #define FCGI_MAX_CONNS  "FCGI_MAX_CONNS"
 #define FCGI_MAX_REQS   "FCGI_MAX_REQS"
 #define FCGI_MPXS_CONNS "FCGI_MPXS_CONNS"
 
-#include <iostream>
-#include <cstdio>
-
-#include <string>
-
-template <typename T>
-void dump(T& t) {
-    int size = (int)sizeof(T); 
-    char* p = (char*)&t;
-    std::printf("Dump:\n");
-    for (int i = 0; i< size; i++) {
-        std::printf("%d\t", (int)p[i]);
-        if (i % 8 == 7) {
-            std::printf("\n");
-        }
-    }
-    std::printf("\n");
-}
-
-#define LOG(string) (std::printf("%s", (string));)
 
 namespace Slim {
 namespace Net {

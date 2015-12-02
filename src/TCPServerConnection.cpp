@@ -22,31 +22,9 @@ void TCPServerConnection::run() {
     
     // 日志输出连接的TCP用户的地址IP和端口 
     try {
-        InputStreamBuffer isBuf(socket());
-        InputStream is(isBuf);
-        OutputStreamBuffer osBuf(socket());
-        OutputStream os(osBuf);
-        
-        string str;
-        /*
-        int a = isBuf.sbumpc();
-        s += a;
-        app.logger().information("one byte:" + s); 
-        */
-        //char buffer[512];
-        long buffer[512];
-        is>>buffer;
-        str += (char*)buffer;
-        /*
-        BYTE b;
-        while (is.get(b)) {
-            str += (char)b;
-        }
-        */
-        app.logger().information("one byte:" + str); 
-        //is>>buffer;
-        //socket().receiveBytes(buffer, 512);
-        //app.logger().information(string(buffer)); 
+        Handler handler(socket());
+        handler.accept();
+        //app.logger().information("one byte:" + str); 
     } catch (Exception& e) {
         stringstream ss;
         ss << "\tmessage:\t" << e.message() <<std::endl;

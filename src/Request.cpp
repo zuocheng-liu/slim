@@ -23,18 +23,27 @@ void Request::recv() {
     try {
         for (;;) {
             CGIHeader header;
+            cout<<"-------Recieve Header-------"<<std::endl;
             _in >> header;
+            cout<<"-------Recieve Header Done-------"<<std::endl;
             _message.processHeader(header);
+            cout<<"-------Process Header Done-------"<<std::endl;
             cout<<"type:"<<_message.type<<std::endl;
+            cout<<"REQID:"<<_message.requestID<<std::endl;
             cout<<"conLen:"<<_message.contentLength<<std::endl;
+            cout<<"version:"<<_message.version<<std::endl;
+            cout<<"padding:"<<_message.paddingLength<<std::endl;
             switch (_message.type) {
                 case FCGI_BEGIN_REQUEST :
                     if (_message.contentLength > 0) {
                         beginRequest();
+                        recvPadding();
+                        cout<<"-------Begin Request End-------"<<std::endl;
                     } else {
                         throw Exception(FCGI_PROTOCOL_ERROR);
                     }
-                    break;
+                    recvPadding();
+                    continue;
                 case FCGI_PARAMS :
                     /*
                      * get environment parameters
@@ -47,7 +56,9 @@ void Request::recv() {
                     } else {
                         throw Exception(FCGI_PROTOCOL_ERROR);
                     }
-                    break;
+                    cout<<"-------Param END-------"<<std::endl;
+                    recvPadding();
+                    continue;
                 case FCGI_STDIN :
                     if (_message.contentLength > 0) {
                         recvStdIn();
@@ -57,17 +68,19 @@ void Request::recv() {
                     } else {
                         throw Exception(FCGI_PROTOCOL_ERROR);
                     }
-                    break;
+                    cout<<"-------Stdin END-------"<<std::endl;
+                    recvPadding();
+                    continue;
                 /*
                  * The only type of management message this library 
                  * understands is FCGIGetValues.
                  */
                 case FCGI_GET_VALUES :
-                    break;
+                    recvPadding();
+                    continue;
                 default :
-                    break;
+                    continue;
             }
-            recvPadding();
             if (paramRecv == DONE && stdInRecv == DONE) {
                 break;
             }
@@ -79,7 +92,11 @@ void Request::recv() {
 void Request::beginRequest() {
     CGIBeginRequestBody begReqBody;
     _in >> begReqBody;
+    cout<<"roleB1:\t"<<begReqBody.roleB1<<std::endl;
+    cout<<"roleB0:\t"<<begReqBody.roleB0<<std::endl;
     _message.processBeginRecord(begReqBody);
+    cout<<"role:\t"<<_message.role<<std::endl;
+    cout<<"flags:\t"<<_message.flags<<std::endl;
 }
 
 void Request::recvParams() {

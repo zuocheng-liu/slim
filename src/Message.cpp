@@ -21,7 +21,7 @@ void Message::processHeader(const CGIHeader& cgiHeader) {
     version = cgiHeader.version;
 
     if (version != FCGI_VERSION_1) {
-        throw Exception(UNSUPPORTED_VERSION);
+        //throw Exception(UNSUPPORTED_VERSION);
     }
 
     requestID = cgiHeader.requestIdB1;
